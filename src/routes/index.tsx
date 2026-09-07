@@ -169,7 +169,7 @@ function Homedeli() {
         {/* Group 2 */}
         <a
           className="absolute top-[997px] left-[284px] w-[252px] h-[154px] cursor-pointer"
-          href="/desktop-5"
+          href="#"
         >
           <div className="absolute w-[252px] h-[154px] bg-white rounded-[10px] border-[0.5px] border-[#cacaca] shadow-[0px_1px_20.100000381469727px_1px_rgb(0_0_0_/_0.11)]" />
           <div className="absolute top-[108px] left-[14px] w-56 h-9 bg-[#5297ff] rounded-[30px]" />
