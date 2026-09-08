@@ -218,10 +218,12 @@ function Homedeli() {
               className="absolute top-[733px] w-9 h-9 bg-[#0a5c0f] rounded-full"
               style={{ left: CIRCLE_LEFT[index] }}
             />
-            <Shoppingcart
+            <span
               className="absolute top-[742px] pointer-events-none"
               style={{ left: CART_LEFT[index] }}
-            />
+            >
+              <Shoppingcart />
+            </span>
           </div>
         ))}
 
