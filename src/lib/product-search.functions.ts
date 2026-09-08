@@ -17,19 +17,19 @@ export type Product = {
 const SearchInput = z.object({ query: z.string().min(1).max(200) });
 
 async function refineQuery(query: string): Promise<string> {
-  const key = process.env["LOVABLE_API_KEY"];
+  const key = process.env["OPENAI_API_KEY"];
   if (!key) return query;
 
   try {
-    const res = await fetch("https://ai.gateway.lovable.dev/v1/responses", {
+    const res = await fetch("https://api.openai.com/v1/chat/completions", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        "Lovable-API-Key": key,
+        Authorization: `Bearer ${key}`,
       },
       body: JSON.stringify({
-        model: "openai/gpt-5.6-luna",
-        input: [
+        model: "gpt-4o-mini",
+        messages: [
           {
             role: "system",
             content:
@@ -37,19 +37,13 @@ async function refineQuery(query: string): Promise<string> {
           },
           { role: "user", content: query },
         ],
+        max_tokens: 30,
       }),
     });
 
     if (!res.ok) return query;
     const data: any = await res.json();
-    const text: string =
-      data.output_text ??
-      (Array.isArray(data.output)
-        ? data.output
-            .flatMap((item: any) => item?.content ?? [])
-            .map((part: any) => part?.text ?? "")
-            .join(" ")
-        : "");
+    const text: string = data.choices?.[0]?.message?.content ?? "";
     const cleaned = text.replace(/\s+/g, " ").trim();
     return cleaned.length > 1 ? cleaned.slice(0, 120) : query;
   } catch {
